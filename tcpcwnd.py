@@ -106,7 +106,7 @@ def start_receiver(net):
          h = net.getNodeByName('h%d'%(i+2))
          client = h.popen('iperf -s', shell=True)
 
-def set_init_cwnd(net, num_seg)
+def set_init_cwnd(net, num_seg):
     ''' --How to change initial cwnd--
         ip route show
         sudo ip route change [Paste the current settings for default] initcwnd 10
@@ -125,7 +125,10 @@ def set_init_cwnd(net, num_seg)
     # Verify
     popens = h1.popen('ip route show')
 
-def run_iperfs(net)
+def run_iperfs(net):
+    pass
+
+def plot_latency():
     pass
 
 def main():
