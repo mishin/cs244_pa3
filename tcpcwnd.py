@@ -75,6 +75,7 @@ class StarTopo(Topo):
                     max_queue_size=self.maxq, htb=True)
 
             self.addLink(host, switch, **linkopts)
+        # Let h1 be the front-end server
 
 def getBW():
     sample = random.uniform(0, 1)
@@ -98,7 +99,14 @@ def getRTT():
     else:
         return (120+1000)/2.0
 
-def set_init_cwnd(num_seg)
+def start_receiver(net):
+    print "Starting iperf servers..."
+
+    for i in xrange(args.n-1):   # Can we get number of nodes from <net>?
+         h = net.getNodeByName('h%d'%(i+2))
+         client = h.popen('iperf -s', shell=True)
+
+def set_init_cwnd(net, num_seg)
     ''' --How to change initial cwnd--
         ip route show
         sudo ip route change [Paste the current settings for default] initcwnd 10
@@ -108,9 +116,16 @@ def set_init_cwnd(num_seg)
     # Are we testing with request repsonses? (In this case, the server)
 
     # How do we set the result of a bash cmd as an input?
-    pass
+    
+    h1 = net.getNodeByName('h1')
 
-def run_iperfs()
+    popens = h1.popen('ip route show')
+    popens = h1.popen('ip route change ??? initcwnd %s' % num_seg)
+    
+    # Verify
+    popens = h1.popen('ip route show')
+
+def run_iperfs(net)
     pass
 
 def main():
@@ -125,15 +140,19 @@ def main():
     net.pingAll()
 
     CLI(net)
+
+    # Start iperf servers in users
+    start_receiver(net)
+
     # Set initial congestion window to three
-    set_init_cwnd(3)
+    set_init_cwnd(net, 3)
     # Experiment
-    run_iperfs()
+    run_iperfs(net)
 
     # Set initial congestion window to ten
-    set_init_cwnd(10)
+    set_init_cwnd(net, 10)
     # Experiment
-    run_iperfs()
+    run_iperfs(net)
 
     # How do we collect latency 
 
