@@ -98,6 +98,20 @@ def getRTT():
     else:
         return (120+1000)/2.0
 
+def set_init_cwnd(num_seg)
+    ''' --How to change initial cwnd--
+        ip route show
+        sudo ip route change [Paste the current settings for default] initcwnd 10
+    '''
+
+    # Which hosts do we need to change initcwnd?
+    # Are we testing with request repsonses? (In this case, the server)
+
+    # How do we set the result of a bash cmd as an input?
+    pass
+
+def run_iperfs()
+    pass
 
 def main():
     "Create network and run Buffer Sizing experiment"
@@ -112,10 +126,19 @@ def main():
 
     CLI(net)
     # Set initial congestion window to three
+    set_init_cwnd(3)
     # Experiment
+    run_iperfs()
 
     # Set initial congestion window to ten
+    set_init_cwnd(10)
     # Experiment
+    run_iperfs()
+
+    # How do we collect latency 
+
+    # Plot graph
+    plot_latency()
 
 if __name__ == '__main__':
     try:
