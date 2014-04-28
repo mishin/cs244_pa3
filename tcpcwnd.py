@@ -120,6 +120,7 @@ def set_init_cwnd(net, num_seg):
     h1 = net.getNodeByName('h1')
 
     popens = h1.popen('ip route show')
+    print popens
     popens = h1.popen('ip route change ??? initcwnd %s' % num_seg)
     
     # Verify
@@ -142,25 +143,23 @@ def main():
     dumpNodeConnections(net.hosts)
     net.pingAll()
 
-    CLI(net)
-
     # Start iperf servers in users
-    start_receiver(net)
+    #start_receiver(net)
 
     # Set initial congestion window to three
     set_init_cwnd(net, 3)
     # Experiment
-    run_iperfs(net)
+    #run_iperfs(net)
 
     # Set initial congestion window to ten
-    set_init_cwnd(net, 10)
+    #set_init_cwnd(net, 10)
     # Experiment
-    run_iperfs(net)
+    #run_iperfs(net)
 
     # How do we collect latency 
 
     # Plot graph
-    plot_latency()
+    #plot_latency()
 
 if __name__ == '__main__':
     try:
