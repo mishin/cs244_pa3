@@ -28,8 +28,6 @@ from util.helper import stdev
 # Parse arguments
 parser = ArgumentParser(description="Cwnd adjusting")
 
-# Expt parameters
-args = parser.parse_args()
 parser.add_argument('-n',
                     dest="n",
                     type=int,
@@ -48,6 +46,7 @@ parser.add_argument('--cong',
                     help="Congestion control algorithm to use",
                     default="bic")
 
+args = parser.parse_args()
 
 # Topology to be instantiated in Mininet
 class StarTopo(Topo):
@@ -58,7 +57,8 @@ class StarTopo(Topo):
         super(StarTopo, self ).__init__()
         self.n = n
         self.cpu = cpu
-        self.create_topology()
+        self.maxq = maxq
+	self.create_topology()
 
     def create_topology(self):
 
@@ -68,8 +68,8 @@ class StarTopo(Topo):
         # add hosts and links
         for h in range(self.n):
             host = self.addHost('h%s' % (h + 1))
-            bw_inst = getBW()
-            delay_inst = '%fms'%getRTT()/4
+            bw_inst = getBW()/1000.0    # kbps -> Mbps
+            delay_inst = '%fms' % (getRTT()/4)
                         
             linkopts = dict(bw=bw_inst, delay=delay_inst,
                     max_queue_size=self.maxq, htb=True)
@@ -110,7 +110,7 @@ def main():
     dumpNodeConnections(net.hosts)
     net.pingAll()
 
-    net.CLI()
+    CLI(net)
     # Set initial congestion window to three
     # Experiment
 
