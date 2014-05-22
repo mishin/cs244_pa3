@@ -112,22 +112,22 @@ def set_init_cwnd(net, num_seg):
         sudo ip route change [Paste the current settings for default] initcwnd 10
     '''
 
-    # Which hosts do we need to change initcwnd?
-    # Are we testing with request repsonses? (In this case, the server)
-
-    # How do we set the result of a bash cmd as an input?
+    print "Changing initcwnd of h1(server) to %d..." % num_seg  
     
     h1 = net.getNodeByName('h1')
 
-    popens = h1.popen('ip route show')
-    print popens
-    popens = h1.popen('ip route change ??? initcwnd %s' % num_seg)
+    result = h1.cmd('ip route show')
+    result = result.rstrip('\n')
+    print result
+    result = h1.cmd('ip route change %s initcwnd %d' % (result.rstrip('\n'), num_seg))
     
     # Verify
-    popens = h1.popen('ip route show')
+    result = h1.cmd('ip route show')
+    result = result.rstrip('\n')
+    print result
 
 def run_iperfs(net):
-    pass
+    
 
 def plot_latency():
     pass
