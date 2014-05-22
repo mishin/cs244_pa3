@@ -127,7 +127,16 @@ def set_init_cwnd(net, num_seg):
     print result
 
 def run_iperfs(net):
-    
+    h1 = net.getNodeByName('h1')
+    for i in xrange(args.net-1):
+        h = net.getNodeByName('h%d' % i+2)
+        size = get_response_size()
+        client = h.popen('iperf -c %s' % h1)
+    # Need to give random size of flow based on distribution    
+    # Also make it send sequentially
+
+def get_response_size()
+    pass
 
 def plot_latency():
     pass
