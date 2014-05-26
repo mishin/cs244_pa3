@@ -67,10 +67,12 @@ class StarTopo(Topo):
 
         # add hosts and links
         for h in range(self.n):
+            hostname = 'h%s' % (h+1)
             host = self.addHost('h%s' % (h + 1))
             bw_inst = getBW()/1000.0    # kbps -> Mbps
             delay_inst = '%fms' % (getRTT()/4)
-                        
+            
+            print "Setting %s-%s link (BW, delay) to (%.2f Mbps, %.2fms)" % (hostname, 's0', bw_inst, delay_inst)            
             linkopts = dict(bw=bw_inst, delay=delay_inst,
                     max_queue_size=self.maxq, htb=True)
 
