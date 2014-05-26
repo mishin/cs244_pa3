@@ -135,9 +135,21 @@ def run_iperfs(net, destHost):
 
     h = net.getNodeByName(destHost)    
     size = get_response_size()
-    client = h.popen('iperf -c %s -n %s' % (h.IP(), size))
+    client = h1.popen('iperf -c %s -n %s' % (h.IP(), size))
     # Need to give random size of flow based on distribution    
     # Also make it send sequentially
+
+def run_http_server(net):
+    print "Starting SimpleHTTPServer at h1 ..."
+    h1 = net.getNodeByName('h1')
+    server = h1.popen('python -m SimpleHTTPServer')
+
+def start_http_request(net, hostName):
+    user = net.getNodeByName(hostName)
+    server = net.getNodeByName('h1')
+    size = get_response_size()
+    print "%s Requesting http response of %d bytes" % (hostName, size)
+    client = popen('time wget %s' % server.IP())
 
 def get_response_size():    # returns in bytes
     sample = random.uniform(0, 1)
@@ -166,14 +178,16 @@ def main():
 
     # Start iperf servers in users
     #start_receiver(net)
+    run_http_server(net)
 
     # Set initial congestion window to three
     set_init_cwnd(net, 3)
     # Experiment
     for i in xrange(args.n-1):
         destHost = "h%d"%(i+2)
-        start_receiver(net, destHost)
-        run_iperfs(net, destHost)
+        start_http_request(net, destHost)
+        #start_receiver(net, destHost)
+        #run_iperfs(net, destHost)
 
     # Set initial congestion window to ten
     #set_init_cwnd(net, 10)
