@@ -99,12 +99,12 @@ def getRTT():
     else:
         return (120+1000)/2.0
 
-def start_receiver(net):
-    print "Starting iperf servers..."
+def start_receiver(net, hostName):
+    print "Starting iperf server at %s ..." % hostName
 
-    for i in xrange(args.n-1):   # Can we get number of nodes from <net>?
-         h = net.getNodeByName('h%d'%(i+2))
-         client = h.popen('iperf -s', shell=True)
+    #for i in xrange(args.n-1):   # Can we get number of nodes from <net>?
+    h = net.getNodeByName(hostName)
+    client = h.popen('iperf -s -w %d' % 50000, shell=True)    # 50kB TCP window
 
 def set_init_cwnd(net, num_seg):
     ''' --How to change initial cwnd--
@@ -126,17 +126,27 @@ def set_init_cwnd(net, num_seg):
     result = result.rstrip('\n')
     print result
 
-def run_iperfs(net):
+def run_iperfs(net, destHost):
     h1 = net.getNodeByName('h1')
-    for i in xrange(args.net-1):
-        h = net.getNodeByName('h%d' % i+2)
-        size = get_response_size()
-        client = h.popen('iperf -c %s' % h1)
+    #for i in xrange(args.net-1):
+    #    h = net.getNodeByName('h%d' % i+2)
+
+    h = net.getNodeByName(destHost)    
+    size = get_response_size()
+    client = h.popen('iperf -c %s -n %s' % (h.IP(), size))
     # Need to give random size of flow based on distribution    
     # Also make it send sequentially
 
-def get_response_size()
-    pass
+def get_response_size():    # returns in bytes
+    sample = random.uniform(0, 1)
+    if sample < 0.25:
+        return 200
+    elif sample < 0.5:
+        return 1500
+    elif sample < 0.75:
+        return 5000
+    else:
+        return 50000
 
 def plot_latency():
     pass
@@ -158,7 +168,10 @@ def main():
     # Set initial congestion window to three
     set_init_cwnd(net, 3)
     # Experiment
-    #run_iperfs(net)
+    for i in xrange(args.n-1):
+        destHost = "h%d"%(i+2)
+        start_receiver(net, destHost)
+        run_iperfs(net, destHost)
 
     # Set initial congestion window to ten
     #set_init_cwnd(net, 10)
