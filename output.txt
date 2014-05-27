@@ -68,3 +68,19 @@ Saving to: `index.html.14'
 real	0m4.627s
 user	0m0.000s
 sys	0m0.004s
+
+real	0m0.189s
+user	0m0.000s
+sys	0m0.004s
+
+real	0m0.122s
+user	0m0.004s
+sys	0m0.000s
+
+real	0m0.173s
+user	0m0.004s
+sys	0m0.000s
+
+real	0m0.386s
+user	0m0.000s
+sys	0m0.004s

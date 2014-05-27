@@ -58,9 +58,9 @@ class StarTopo(Topo):
         self.n = n
         self.cpu = cpu
         self.maxq = maxq
+        self.bwMap = {}     # BW in Mbps
         self.create_topology()
-        self.bwMap = {}
-
+        
     def create_topology(self):
 
         # add switch
