@@ -148,14 +148,12 @@ def start_http_server(net):
 """ http request from node <clientName>
 """
 # TODO: get the output of time command to collect response time
-def http_request(net, clientName):
+def http_request(net, clientName, outputFile):
     print "Requesting HTTP server from %s..." % clientName
     client = net.getNodeByName(clientName)
     server = net.getNodeByName("h0")
     r = client.cmd("time wget -q -O /dev/null %s:8000" % server.IP())
-    f = open('output.txt', 'a')
-    f.write(r)
-    f.close()
+    outputFile.write(r)
     response_time = 0   # Need to change this
     return response_time
 
@@ -178,13 +176,18 @@ def main():
     # Experiment
     cwnd_list = [3, 10]
 
+    # output file
+    f = open('output.txt', 'a')
+
     for host_id in xrange(1, args.n):
         client = "h%d" % host_id
         for cwnd in cwnd_list:
             # Set initial congestion window
             set_init_cwnd(net, cwnd)
             # Send request and measure response time
-            resp_time = http_request(net, client)
+            resp_time = http_request(net, client, f)
+
+    f.close()
 
 if __name__ == '__main__':
     try:
