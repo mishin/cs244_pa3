@@ -152,8 +152,10 @@ def http_request(net, clientName):
     print "Requesting HTTP server from %s..." % clientName
     client = net.getNodeByName(clientName)
     server = net.getNodeByName("h0")
-    client.popen("time wget %s:8000" % server.IP())
-
+    r = client.cmd("time wget -q -O /dev/null %s:8000" % server.IP())
+    f = open('output.txt', 'a')
+    f.write(r)
+    f.close()
     response_time = 0   # Need to change this
     return response_time
 

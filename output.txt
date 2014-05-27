@@ -1,0 +1,70 @@
+--2014-05-27 20:57:51--  http://10.0.0.1:8000/
+Connecting to 10.0.0.1:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text-html]
+Saving to: `index.html.10'
+
+     0K .                                                       267K=0.005s
+
+2014-05-27 20:57:52 (267 KB/s) - `index.html.10' saved [1500]
+
+
+real	0m0.672s
+user	0m0.000s
+sys	0m0.004s
+--2014-05-27 20:59:23--  http://10.0.0.1:8000/
+Connecting to 10.0.0.1:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text-html]
+Saving to: `index.html.11'
+
+     0K .                                                       240K=0.006s
+
+2014-05-27 20:59:23 (240 KB/s) - `index.html.11' saved [1500]
+
+
+real	0m0.166s
+user	0m0.000s
+sys	0m0.004s
+--2014-05-27 20:59:23--  http://10.0.0.1:8000/
+Connecting to 10.0.0.1:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text-html]
+Saving to: `index.html.12'
+
+     0K .......... .......... .......... .......... ........   12.2K=4.0s
+
+2014-05-27 20:59:28 (12.2 KB/s) - `index.html.12' saved [50000]
+
+
+real	0m4.156s
+user	0m0.000s
+sys	0m0.004s
+--2014-05-27 20:59:28--  http://10.0.0.1:8000/
+Connecting to 10.0.0.1:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text-html]
+Saving to: `index.html.13'
+
+     0K .                                                       252K=0.006s
+
+2014-05-27 20:59:28 (252 KB/s) - `index.html.13' saved [1500]
+
+
+real	0m0.626s
+user	0m0.000s
+sys	0m0.004s
+--2014-05-27 20:59:28--  http://10.0.0.1:8000/
+Connecting to 10.0.0.1:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text-html]
+Saving to: `index.html.14'
+
+     0K .......... .......... .......... .......... ........   12.2K=4.0s
+
+2014-05-27 20:59:33 (12.2 KB/s) - `index.html.14' saved [50000]
+
+
+real	0m4.627s
+user	0m0.000s
+sys	0m0.004s
