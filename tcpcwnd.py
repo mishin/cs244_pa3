@@ -137,22 +137,16 @@ def run_iperfs(net, destHost):
     # Need to give random size of flow based on distribution    
     # Also make it send sequentially
 '''
-def get_response_size():    # returns in bytes
-    sample = random.uniform(0, 1)
-    if sample < 0.25:
-        return 200
-    elif sample < 0.5:
-        return 1500
-    elif sample < 0.75:
-        return 5000
-    else:
-        return 50000
 
+""" Start http server at node h1
+"""
 def start_http_server(net):
     print "Starting HTTP server at h1..."
     server = net.getNodeByName("h1")
-    server.popen("python httpserver.py")    
+    server.popen("python httpServer.py")    
 
+""" http request from node <clientName>
+"""
 # TODO: get the output of time command to collect response time
 def http_request(net, clientName)
     print "Requesting HTTP server from %s..." % clientName
@@ -163,6 +157,8 @@ def http_request(net, clientName)
     response_time = 0   # Need to change this
     return response_time
 
+""" Main function
+"""
 def main():
     "Create network and run Buffer Sizing experiment"
 
@@ -173,21 +169,19 @@ def main():
     net.start()
     dumpNodeConnections(net.hosts)
     net.pingAll()
-
-    # Start iperf servers in users
-    #start_receiver(net)
-
+    
     # Run simple http server on h1
     start_http_server(net)
 
     # Experiment
     cwnd_list = [3, 10]
-    for cwnd in cwnd_list:
-        # Set initial congestion window
-        set_init_cwnd(net, cwnd)
-        # Send http request and collect response time
-        for i in xrange(2, args.n):
-            client = "h%d" % i
+
+    for host_id in xrange(2, args.n):
+        client = "h%d" % host_id
+        for cwnd in cwnd_list:
+            # Set initial congestion window
+            set_init_cwnd(net, cwnd)
+            # Send request and measure response time
             resp_time = http_request(net, client)
 
 if __name__ == '__main__':
