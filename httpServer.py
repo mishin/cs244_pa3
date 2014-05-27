@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import os
+import sys
 import random
 
 """ Create custom HTTPRequestHandler class
@@ -44,14 +45,15 @@ def get_response_size():
         return 50000    
     
 def run():
+
     print('http server is starting...')
     
     #ip and port of server
-    #by default http server port is 80
-    server_address = ('127.0.0.1', 80)
+    #by default http server port is 8000
+    server_address = ('', 8000)
     httpd = HTTPServer(server_address, KodeFunHTTPRequestHandler)
     print('http server is running...')
     httpd.serve_forever()
     
 if __name__ == '__main__':
-    run()
+    run()   # first argument is the ip address
