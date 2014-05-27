@@ -75,7 +75,7 @@ class StarTopo(Topo):
                     max_queue_size=self.maxq, htb=True)
 
             self.addLink(host, switch, **linkopts)
-        # Let h1 be the front-end server
+        # Let h0 be the front-end server
 
 def getBW():
     sample = random.uniform(0, 1)
@@ -112,17 +112,17 @@ def set_init_cwnd(net, num_seg):
         sudo ip route change [Paste the current settings for default] initcwnd 10
     '''
 
-    print "Changing initcwnd of h1(server) to %d..." % num_seg  
+    print "Changing initcwnd of h0(server) to %d..." % num_seg  
     
-    h1 = net.getNodeByName('h1')
+    h0 = net.getNodeByName('h0')
 
-    result = h1.cmd('ip route show')
+    result = h0.cmd('ip route show')
     result = result.rstrip('\n')
     print result
-    result = h1.cmd('ip route change %s initcwnd %d' % (result.rstrip('\n'), num_seg))
+    result = h0.cmd('ip route change %s initcwnd %d' % (result.rstrip('\n'), num_seg))
     
     # Verify
-    result = h1.cmd('ip route show')
+    result = h0.cmd('ip route show')
     result = result.rstrip('\n')
     print result
 '''
@@ -141,8 +141,8 @@ def run_iperfs(net, destHost):
 """ Start http server at node h1
 """
 def start_http_server(net):
-    print "Starting HTTP server at h1..."
-    server = net.getNodeByName("h1")
+    print "Starting HTTP server at h0..."
+    server = net.getNodeByName("h0")
     server.popen("python httpServer.py")    
 
 """ http request from node <clientName>
@@ -151,7 +151,7 @@ def start_http_server(net):
 def http_request(net, clientName):
     print "Requesting HTTP server from %s..." % clientName
     client = net.getNodeByName(clientName)
-    server = net.getNodeByName("h1")
+    server = net.getNodeByName("h0")
     client.popen("time wget %s:8000" % server.IP())
 
     response_time = 0   # Need to change this
@@ -176,7 +176,7 @@ def main():
     # Experiment
     cwnd_list = [3, 10]
 
-    for host_id in xrange(2, args.n + 1):
+    for host_id in xrange(1, args.n):
         client = "h%d" % host_id
         for cwnd in cwnd_list:
             # Set initial congestion window
