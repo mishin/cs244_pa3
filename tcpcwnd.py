@@ -148,7 +148,7 @@ def start_http_server(net):
 """ http request from node <clientName>
 """
 # TODO: get the output of time command to collect response time
-def http_request(net, clientName)
+def http_request(net, clientName):
     print "Requesting HTTP server from %s..." % clientName
     client = net.getNodeByName(clientName)
     server = net.getNodeByName("h1")
