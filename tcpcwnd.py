@@ -176,7 +176,7 @@ def main():
     # Experiment
     cwnd_list = [3, 10]
 
-    for host_id in xrange(2, args.n):
+    for host_id in xrange(2, args.n + 1):
         client = "h%d" % host_id
         for cwnd in cwnd_list:
             # Set initial congestion window
