@@ -59,6 +59,7 @@ class StarTopo(Topo):
         self.cpu = cpu
         self.maxq = maxq
         self.create_topology()
+        self.bwMap = {}
 
     def create_topology(self):
 
@@ -67,15 +68,21 @@ class StarTopo(Topo):
 
         # add hosts and links
         for h in range(0, self.n):
-            host = self.addHost('h%s' % h)
-            bw_inst = getBW()/1000.0    # kbps -> Mbps
-            delay_inst = '%fms' % (getRTT()/4)
+            host_name = 'h%s' % h
+            host = self.addHost(host_name)
+            if h == 0:
+                bw_inst = 10 # link to server has 10 Mbps BW
+                delay_inst = '%fms' % (70.0/4) # Based on mediat RTT 70ms
+            else:
+                bw_inst = getBW()/1000.0    # kbps -> Mbps
+                delay_inst = '%fms' % (getRTT()/4)
                         
             linkopts = dict(bw=bw_inst, delay=delay_inst,
                     max_queue_size=self.maxq, htb=True)
 
             self.addLink(host, switch, **linkopts)
-        # Let h0 be the front-end server
+            self.bwMap[host_name] = bw_inst
+            # Let h0 be the front-end server
 
 def getBW():
     sample = random.uniform(0, 1)
@@ -167,6 +174,10 @@ def main():
     start = time()
     # Reset to known state
     topo = StarTopo(n=args.n, maxq=args.maxq)
+    
+    # Just to check
+    print topo.bwMap
+
     net = Mininet(topo=topo, host=CPULimitedHost, link=TCLink)
     net.start()
     dumpNodeConnections(net.hosts)
