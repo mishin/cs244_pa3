@@ -58,7 +58,7 @@ class StarTopo(Topo):
         self.n = n
         self.cpu = cpu
         self.maxq = maxq
-	self.create_topology()
+        self.create_topology()
 
     def create_topology(self):
 
@@ -66,13 +66,11 @@ class StarTopo(Topo):
         switch = self.addSwitch('s0')
 
         # add hosts and links
-        for h in range(self.n):
-            hostname = 'h%s' % (h+1)
-            host = self.addHost('h%s' % (h + 1))
+        for h in range(0, self.n):
+            host = self.addHost('h%s' % h)
             bw_inst = getBW()/1000.0    # kbps -> Mbps
             delay_inst = '%fms' % (getRTT()/4)
-            
-            print "Setting %s-%s link (BW, delay) to (%.2f Mbps, %.2fms)" % (hostname, 's0', bw_inst, delay_inst)            
+                        
             linkopts = dict(bw=bw_inst, delay=delay_inst,
                     max_queue_size=self.maxq, htb=True)
 
@@ -100,14 +98,14 @@ def getRTT():
         return (70+120)/2.0
     else:
         return (120+1000)/2.0
-
+'''
 def start_receiver(net, hostName):
     print "Starting iperf server at %s ..." % hostName
 
     #for i in xrange(args.n-1):   # Can we get number of nodes from <net>?
     h = net.getNodeByName(hostName)
     client = h.popen('iperf -s -w %d' % 50000, shell=True)    # 50kB TCP window
-
+'''
 def set_init_cwnd(net, num_seg):
     ''' --How to change initial cwnd--
         ip route show
@@ -127,7 +125,7 @@ def set_init_cwnd(net, num_seg):
     result = h1.cmd('ip route show')
     result = result.rstrip('\n')
     print result
-
+'''
 def run_iperfs(net, destHost):
     h1 = net.getNodeByName('h1')
     #for i in xrange(args.net-1):
@@ -135,22 +133,10 @@ def run_iperfs(net, destHost):
 
     h = net.getNodeByName(destHost)    
     size = get_response_size()
-    client = h1.popen('iperf -c %s -n %s' % (h.IP(), size))
+    client = h.popen('iperf -c %s -n %s' % (h.IP(), size))
     # Need to give random size of flow based on distribution    
     # Also make it send sequentially
-
-def run_http_server(net):
-    print "Starting SimpleHTTPServer at h1 ..."
-    h1 = net.getNodeByName('h1')
-    server = h1.popen('python -m SimpleHTTPServer')
-
-def start_http_request(net, hostName):
-    user = net.getNodeByName(hostName)
-    server = net.getNodeByName('h1')
-    size = get_response_size()
-    print "%s Requesting http response of %d bytes" % (hostName, size)
-    client = popen('time wget %s' % server.IP())
-
+'''
 def get_response_size():    # returns in bytes
     sample = random.uniform(0, 1)
     if sample < 0.25:
@@ -162,8 +148,20 @@ def get_response_size():    # returns in bytes
     else:
         return 50000
 
-def plot_latency():
-    pass
+def start_http_server(net):
+    print "Starting HTTP server at h1..."
+    server = net.getNodeByName("h1")
+    server.popen("python httpserver.py")    
+
+# TODO: get the output of time command to collect response time
+def http_request(net, clientName)
+    print "Requesting HTTP server from %s..." % clientName
+    client = net.getNodeByName(clientName)
+    server = net.getNodeByName("h1")
+    client.popen("time wget %s:8000" % server.IP())
+
+    response_time = 0   # Need to change this
+    return response_time
 
 def main():
     "Create network and run Buffer Sizing experiment"
@@ -178,26 +176,19 @@ def main():
 
     # Start iperf servers in users
     #start_receiver(net)
-    run_http_server(net)
 
-    # Set initial congestion window to three
-    set_init_cwnd(net, 3)
+    # Run simple http server on h1
+    start_http_server(net)
+
     # Experiment
-    for i in xrange(args.n-1):
-        destHost = "h%d"%(i+2)
-        start_http_request(net, destHost)
-        #start_receiver(net, destHost)
-        #run_iperfs(net, destHost)
-
-    # Set initial congestion window to ten
-    #set_init_cwnd(net, 10)
-    # Experiment
-    #run_iperfs(net)
-
-    # How do we collect latency 
-
-    # Plot graph
-    #plot_latency()
+    cwnd_list = [3, 10]
+    for cwnd in cwnd_list:
+        # Set initial congestion window
+        set_init_cwnd(net, cwnd)
+        # Send http request and collect response time
+        for i in xrange(2, args.n):
+            client = "h%d" % i
+            resp_time = http_request(net, client)
 
 if __name__ == '__main__':
     try:
