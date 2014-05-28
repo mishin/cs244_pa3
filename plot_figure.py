@@ -40,6 +40,7 @@ buckets["2000"] = []
 def addToBucket(bw, latency_small, latency_large):
         improvement_abs = latency_small - latency_large
         improvement_perc = (improvement_abs / latency_small) * 100.0
+	print "%d, %d" % (improvement_abs, improvement_perc)
         if bw <= 56:
                 buckets["56"].append((improvement_abs, improvement_perc))
         elif bw <= 256:
