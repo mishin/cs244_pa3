@@ -58,7 +58,7 @@ args = parser.parse_args()
 class StarTopo(Topo):
     "Star topology for Buffer Sizing experiment"
 
-    def __init__(self, n=3, cpu=None, maxq=None):
+    def __init__(self, n=3, cpu=None, maxq=10000):
         # Add default members to class.
         super(StarTopo, self ).__init__()
         self.n = n
@@ -77,14 +77,14 @@ class StarTopo(Topo):
             host_name = 'h%s' % h
             host = self.addHost(host_name)
             if h == 0:
-                bw_inst = 10 # link to server has 10 Mbps BW
-                delay_inst = '%fms' % (70.0/4) # Based on mediat RTT 70ms
+                bw_inst = 100 # link to server has 100 Mbps BW
+                delay_inst = '%fms' % (70.0/4) # Based on median RTT 70ms
             else:
                 bw_inst = getBW()/1000.0    # kbps -> Mbps
                 delay_inst = '%fms' % (getRTT()/4)
                         
             linkopts = dict(bw=bw_inst, delay=delay_inst,
-                    max_queue_size=self.maxq, htb=True)
+                    max_queue_size=10000, htb=True)
 
             self.addLink(host, switch, **linkopts)
             self.bwMap[host_name] = bw_inst*1000
