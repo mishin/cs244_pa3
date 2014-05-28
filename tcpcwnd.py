@@ -131,7 +131,6 @@ def set_init_cwnd(net, num_seg):
 
     result = h0.cmd('ip route show')
     result = result.rstrip('\n')
-    print result
     result = h0.cmd('ip route change %s initcwnd %d' % (result.rstrip('\n'), num_seg))
     
     # Verify
@@ -160,15 +159,12 @@ def start_http_server(net):
 
 """ http request from node <clientName>
 """
-# TODO: get the output of time command to collect response time
 def http_request(net, clientName, outputFile):
     print "Requesting HTTP server from %s..." % clientName
     client = net.getNodeByName(clientName)
     server = net.getNodeByName("h0")
     r = client.cmd("time wget -q -O /dev/null %s:8000" % server.IP())
     outputFile.write(r)
-    response_time = 0   # Need to change this
-    return response_time
 
 """ Main function
 """
