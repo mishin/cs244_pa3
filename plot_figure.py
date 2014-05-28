@@ -31,6 +31,18 @@ buckets["256"] = []
 buckets["512"] = []
 buckets["1000"] = []
 buckets["2000"] = []
+buckets["3000"] = []
+buckets["5000"] = []
+buckets["5000+"] = []
+
+def align_yaxis(ax1, v1, ax2, v2):
+    """adjust ax2 ylimit so that v2 in ax2 is aligned to v1 in ax1"""
+    _, y1 = ax1.transData.transform((0, v1))
+    _, y2 = ax2.transData.transform((0, v2))
+    inv = ax2.transData.inverted()
+    _, dy = inv.transform((0, 0)) - inv.transform((0, y1-y2))
+    miny, maxy = ax2.get_ylim()
+    ax2.set_ylim(miny+dy, maxy+dy)
 
 # args:
 #       bw - bandwidth (Kbps)
@@ -51,6 +63,12 @@ def addToBucket(bw, latency_small, latency_large):
                 buckets["1000"].append((improvement_abs, improvement_perc))
         elif bw <= 2000:
                 buckets["2000"].append((improvement_abs, improvement_perc))
+        elif bw <= 3000:
+                buckets["3000"].append((improvement_abs, improvement_perc))
+        elif bw <= 5000:
+                buckets["5000"].append((improvement_abs, improvement_perc))
+        else:
+                buckets["5000+"].append((improvement_abs, improvement_perc))
 try:
         with open(args.infile) as csvfile:
                 reader = csv.reader(csvfile, delimiter='\t')
@@ -77,6 +95,18 @@ try:
 		improvement.append(numpy.mean(buckets["2000"], 0))
 	else:
 		improvement.append((0,0))
+        if buckets["3000"]:
+		improvement.append(numpy.mean(buckets["3000"], 0))
+	else:
+		improvement.append((0,0))
+        if buckets["5000"]:
+		improvement.append(numpy.mean(buckets["5000"], 0))
+	else:
+		improvement.append((0,0))
+        if buckets["5000+"]:
+		improvement.append(numpy.mean(buckets["5000+"], 0))
+	else:
+		improvement.append((0,0))
 
 	avg_improvement = []
         perc_improvement = []
@@ -85,20 +115,21 @@ try:
 		avg_improvement.append(a[0])
 		perc_improvement.append(a[1])
 
-        N = 5
+        N = 8
         ind = numpy.arange(N)  # the x locations for the groups
         width = 0.35       # the width of the bars
 
         fig, ax = plt.subplots()
-        rects1 = ax.bar(ind, avg_improvement, width, color='m')
-        rects2 = ax.bar(ind+width, perc_improvement, width, color='b')
+	ax2 = ax.twinx()
+        rects1 = ax.bar(ind, avg_improvement, width, color='m', log=1)
+        rects2 = ax2.bar(ind+width, perc_improvement, width, color='b')
 
-        # add some
+        # add labels
         ax.set_ylabel('Improvement (ms)')
+	ax2.set_ylabel('some label')
         ax.set_xlabel('Bandwidth (Kbps)')
         ax.set_xticks(ind+width)
-        ax.set_xticklabels( ('56', '256', '512', '1000', '2000') )
-
+        ax.set_xticklabels( ('56', '256', '512', '1000', '2000', '3000', '5000', '5000+') )
         ax.legend( (rects1[0], rects2[0]), ('Absolute Improvement', 'Percentage Improvement') )
         plt.savefig(args.out)
 except EnvironmentError:

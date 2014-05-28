@@ -92,16 +92,22 @@ class StarTopo(Topo):
 
 def getBW():
     sample = random.uniform(0, 1)
-    if sample < 0.2:
+    if sample < 0.125:
         return 50  # kbps
-    elif sample < 0.4:
+    elif sample < 0.25:
         return 200
-    elif sample < 0.6:
+    elif sample < 0.375:
         return 500
-    elif sample < 0.8:
+    elif sample < 0.5:
         return 900
-    else:
+    elif sample < 0.625:
         return 1600
+    elif sample < 0.75:
+        return 2500
+    elif sample < 0.875:
+        return 3500
+    else:
+        return 5500
 
 def getRTT():
     sample = random.uniform(0, 1)
