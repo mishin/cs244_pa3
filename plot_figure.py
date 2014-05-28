@@ -1,3 +1,4 @@
+import math
 import csv
 import numpy
 import matplotlib as m
@@ -7,6 +8,21 @@ if os.uname()[0] == "Darwin":
 else:
     m.use("Agg")
 import matplotlib.pyplot as plt
+from argparse import ArgumentParser
+
+# Parse arguments
+parser = ArgumentParser(description="Takes nicely formatted data and makes a bar chart")
+parser.add_argument('-f', '--file',
+                    help="Input file for data, e.g.: -f output_formatted.txt",
+                    dest="infile",
+                    required=True,
+                    default=None)
+parser.add_argument('-o', '--out',
+                    help="Save plot to output file, e.g.: --out plot.png",
+                    dest="out",
+                    required=True,
+                    default=None)
+args = parser.parse_args()
 
 # bandwidth buckets
 buckets = {}
@@ -23,7 +39,7 @@ buckets["2000"] = []
 
 def addToBucket(bw, latency_small, latency_large):
         improvement_abs = latency_small - latency_large
-        improvement_perc = improvement_abs / latency_small
+        improvement_perc = (improvement_abs / latency_small) * 100.0
         if bw <= 56:
                 buckets["56"].append((improvement_abs, improvement_perc))
         elif bw <= 256:
@@ -35,22 +51,38 @@ def addToBucket(bw, latency_small, latency_large):
         elif bw <= 2000:
                 buckets["2000"].append((improvement_abs, improvement_perc))
 try:
-        with open('sample_data.txt') as csvfile:
+        with open(args.infile) as csvfile:
                 reader = csv.reader(csvfile, delimiter='\t')
                 for row in reader:
                         addToBucket(float(row[0]), float(row[1]), float(row[2]))
         improvement = []
-        improvement.append(numpy.mean(buckets["56"], 0))
-        improvement.append(numpy.mean(buckets["256"], 0))
-        improvement.append(numpy.mean(buckets["512"], 0))
-        improvement.append(numpy.mean(buckets["1000"], 0))
-        improvement.append(numpy.mean(buckets["2000"], 0))
+        if buckets["56"]:
+		improvement.append(numpy.mean(buckets["56"], 0))
+	else:
+		improvement.append((0,0))
+        if buckets["256"]:
+		improvement.append(numpy.mean(buckets["256"], 0))
+	else:
+		improvement.append((0,0))
+        if buckets["512"]:
+		improvement.append(numpy.mean(buckets["512"], 0))
+	else:
+		improvement.append((0,0))
+        if buckets["1000"]:
+		improvement.append(numpy.mean(buckets["1000"], 0))
+	else:
+		improvement.append((0,0))
+        if buckets["2000"]:
+		improvement.append(numpy.mean(buckets["2000"], 0))
+	else:
+		improvement.append((0,0))
 
-        avg_improvement = list(a[0] for a in improvement)
-        perc_improvement = list(a[1] for a in improvement)
+	avg_improvement = []
+        perc_improvement = []
 
-        print avg_improvement
-        print perc_improvement
+	for a in improvement:
+		avg_improvement.append(a[0])
+		perc_improvement.append(a[1])
 
         N = 5
         menMeans = (20, 35, 30, 35, 27)
@@ -68,6 +100,6 @@ try:
         ax.set_xticklabels( ('56', '256', '512', '1000', '2000') )
 
         ax.legend( (rects1[0], rects2[0]), ('Absolute Improvement', 'Percentage Improvement') )
-        plt.savefig("test.png")
+        plt.savefig(args.out)
 except EnvironmentError:
         print 'Error reading file'

@@ -46,6 +46,12 @@ parser.add_argument('--cong',
                     help="Congestion control algorithm to use",
                     default="bic")
 
+parser.add_argument('-o', '--out',
+                    help="Save plot to output file, e.g.: --out plot.png",
+                    dest="out",
+                    required=True,
+                    default=None)
+
 args = parser.parse_args()
 
 # Topology to be instantiated in Mininet
@@ -58,9 +64,9 @@ class StarTopo(Topo):
         self.n = n
         self.cpu = cpu
         self.maxq = maxq
+        self.bwMap = {}     # BW in Mbps
         self.create_topology()
-        self.bwMap = {}
-
+        
     def create_topology(self):
 
         # add switch
@@ -173,9 +179,6 @@ def main():
     # Reset to known state
     topo = StarTopo(n=args.n, maxq=args.maxq)
     
-    # Just to check
-    print topo.bwMap
-
     net = Mininet(topo=topo, host=CPULimitedHost, link=TCLink)
     net.start()
     dumpNodeConnections(net.hosts)
@@ -188,10 +191,12 @@ def main():
     cwnd_list = [3, 10]
 
     # output file
-    f = open('output.txt', 'a')
+    f = open(args.out, 'a')
 
     for host_id in xrange(1, args.n):
         client = "h%d" % host_id
+	client_bw = str(topo.bwMap[client])
+	f.write("Bandwidth: " + client_bw)
         for cwnd in cwnd_list:
             # Set initial congestion window
             set_init_cwnd(net, cwnd)
