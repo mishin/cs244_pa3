@@ -85,7 +85,6 @@ try:
 		perc_improvement.append(a[1])
 
         N = 5
-        menMeans = (20, 35, 30, 35, 27)
         ind = numpy.arange(N)  # the x locations for the groups
         width = 0.35       # the width of the bars
 

@@ -20,6 +20,7 @@ class KodeFunHTTPRequestHandler(BaseHTTPRequestHandler):
             
             # random string
             resp_size = get_response_size()
+            print resp_size
             response = 'a'*resp_size
             
             # send string to client
