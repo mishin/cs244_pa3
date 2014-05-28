@@ -182,7 +182,7 @@ def main():
     net = Mininet(topo=topo, host=CPULimitedHost, link=TCLink)
     net.start()
     dumpNodeConnections(net.hosts)
-    net.pingAll()
+    #net.pingAll()
     
     # Run simple http server on h1
     start_http_server(net)
