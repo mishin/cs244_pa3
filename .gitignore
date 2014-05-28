@@ -1,3 +1,4 @@
-output.txt
-output_raw.txt
-output_formatted.txt
+# ignore output files
+./output.txt
+./output_raw.txt
+./output_formatted.txt
