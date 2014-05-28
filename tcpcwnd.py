@@ -87,7 +87,7 @@ class StarTopo(Topo):
                     max_queue_size=self.maxq, htb=True)
 
             self.addLink(host, switch, **linkopts)
-            self.bwMap[host_name] = bw_inst
+            self.bwMap[host_name] = bw_inst*1000
             # Let h0 be the front-end server
 
 def getBW():
