@@ -137,6 +137,22 @@ def set_init_cwnd(net, num_seg):
     result = h0.cmd('ip route show')
     result = result.rstrip('\n')
     print result
+
+def set_init_rwnd(net, num_seg):
+    for i in range(1, args.n):
+        hostName = 'h%d' % i
+        print "Changing initrwnd of %s to %d..." % (hostName, num_seg)
+
+        h = net.getNodeByName(hostName)
+
+        result = h.cmd('ip route show')
+        result = result.rstrip('\n')
+        result = h.cmd('ip route change %s initrwnd %d' % (result.rstrip('\n'), num_seg))
+
+        # Verify
+        result = h.cmd('ip route show')
+        result = result.rstrip('\n')
+        print result
 '''
 def run_iperfs(net, destHost):
     h1 = net.getNodeByName('h1')
@@ -179,7 +195,10 @@ def main():
     net.start()
     dumpNodeConnections(net.hosts)
     #net.pingAll()
-    
+
+    # Set initial receive window of clients
+    set_init_rwnd(net, 20)    
+
     # Run simple http server on h1
     start_http_server(net)
 
@@ -194,7 +213,7 @@ def main():
 	client_bw = str(topo.bwMap[client])
 	f.write("Bandwidth: " + client_bw)
         for cwnd in cwnd_list:
-            # Set initial congestion window
+            # Set initial congestion window of server
             set_init_cwnd(net, cwnd)
             # Send request and measure response time
             resp_time = http_request(net, client, f)

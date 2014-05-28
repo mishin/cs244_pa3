@@ -534,3 +534,467 @@ sys	0m0.004s
 real	0m0.175s
 user	0m0.000s
 sys	0m0.004s
+Bandwidth: 350.0
+real	0m2.501s
+user	0m0.004s
+sys	0m0.004s
+
+real	0m0.635s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m0.336s
+user	0m0.000s
+sys	0m0.004s
+
+real	0m0.241s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m0.134s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m1.245s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m1.354s
+user	0m0.004s
+sys	0m0.004s
+
+real	0m0.127s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 2210.5
+real	0m0.134s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.271s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.134s
+user	0m0.004s
+sys	0m0.000s
+
+real	0m0.091s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 100.0
+real	0m0.516s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.204s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 100.0
+real	0m4.265s
+user	0m0.000s
+sys	0m0.004s
+
+real	0m0.126s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.951s
+user	0m0.000s
+sys	0m0.004s
+
+real	0m0.635s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m0.258s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m1.264s
+user	0m0.000s
+sys	0m0.004s
+Bandwidth: 100.0
+real	0m0.254s
+user	0m0.000s
+sys	0m0.004s
+
+real	0m0.420s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m0.259s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m1.264s
+user	0m0.000s
+sys	0m0.004s
+Bandwidth: 100.0
+real	0m4.320s
+user	0m0.000s
+sys	0m0.004s
+
+real	0m0.420s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.188s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.579s
+user	0m0.004s
+sys	0m0.000s
+Bandwidth: 2210.5
+real	0m0.135s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.102s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.770s
+user	0m0.000s
+sys	0m0.004s
+
+real	0m0.623s
+user	0m0.000s
+sys	0m0.004s
+Bandwidth: 879.5
+real	0m0.254s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.623s
+user	0m0.004s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.188s
+user	0m0.004s
+sys	0m0.000s
+
+real	0m0.126s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 2210.5
+real	0m0.178s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.102s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m1.267s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.636s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m1.296s
+user	0m0.000s
+sys	0m0.004s
+
+real	0m0.091s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 100.0
+real	0m0.194s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m4.133s
+user	0m0.000s
+sys	0m0.004s
+Bandwidth: 100.0
+real	0m5.077s
+user	0m0.000s
+sys	0m0.004s
+
+real	0m4.619s
+user	0m0.000s
+sys	0m0.004s
+Bandwidth: 350.0
+real	0m0.954s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.637s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m1.348s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.127s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.952s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m1.361s
+user	0m0.000s
+sys	0m0.004s
+Bandwidth: 350.0
+real	0m0.189s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.197s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m2.082s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m1.361s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 100.0
+real	0m0.384s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m4.182s
+user	0m0.000s
+sys	0m0.004s
+Bandwidth: 350.0
+real	0m0.258s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.126s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 2210.5
+real	0m0.951s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.635s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m2.472s
+user	0m0.004s
+sys	0m0.000s
+
+real	0m0.635s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.134s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.091s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.247s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.126s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.952s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.663s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m1.359s
+user	0m0.000s
+sys	0m0.004s
+
+real	0m1.264s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.254s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.171s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m0.205s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.091s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 2210.5
+real	0m1.266s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.635s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m2.082s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m1.361s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m0.136s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m1.229s
+user	0m0.004s
+sys	0m0.000s
+Bandwidth: 2210.5
+real	0m0.254s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.181s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 2210.5
+real	0m0.177s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.090s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 100.0
+real	0m0.436s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.204s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 100.0
+real	0m0.384s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.447s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 100.0
+real	0m0.436s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.447s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 100.0
+real	0m4.253s
+user	0m0.000s
+sys	0m0.004s
+
+real	0m0.415s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m2.082s
+user	0m0.004s
+sys	0m0.000s
+
+real	0m1.361s
+user	0m0.004s
+sys	0m0.000s
+Bandwidth: 100.0
+real	0m4.320s
+user	0m0.000s
+sys	0m0.004s
+
+real	0m0.171s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.952s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.636s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.681s
+user	0m0.004s
+sys	0m0.000s
+
+real	0m0.126s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 100.0
+real	0m0.437s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m4.181s
+user	0m0.004s
+sys	0m0.000s
+Bandwidth: 879.5
+real	0m0.178s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.091s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 100.0
+real	0m0.135s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.340s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m0.336s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.241s
+user	0m0.000s
+sys	0m0.000s
+Bandwidth: 2210.5
+real	0m1.971s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.646s
+user	0m0.004s
+sys	0m0.000s
+Bandwidth: 350.0
+real	0m0.254s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m1.308s
+user	0m0.000s
+sys	0m0.004s
+Bandwidth: 879.5
+real	0m0.337s
+user	0m0.000s
+sys	0m0.000s
+
+real	0m0.171s
+user	0m0.000s
+sys	0m0.000s
