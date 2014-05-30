@@ -91,7 +91,7 @@ class StarTopo(Topo):
             # Let h0 be the front-end server
 
 def getBW():
-    return 50
+   # return 50
     sample = random.uniform(0, 1)
     if sample < 0.125:
         return 50  # kbps
@@ -140,7 +140,7 @@ def set_all_winds(net, num_seg, wind_type):
             print "[set_all_winds] Invalid window type!"
             return
 
-def set_init_cwnd(net, num_seg):
+def set_init_cwnd(net, hostName, num_seg):
     ''' --How to change initial cwnd--
         ip route show
         sudo ip route change [Paste the current settings for default] initcwnd 10
@@ -231,8 +231,8 @@ def main():
         f.write("Bandwidth: " + client_bw)
         for cwnd in cwnd_list:
             # Set initial congestion window of server
-            set_all_winds(net, cwnd, "cwnd")
-            CLI(net)
+            set_init_cwnd(net, "h0", cwnd)
+            set_init_cwnd(net, client, cwnd)
             # Send request and measure response time
             resp_time = http_request(net, client, f)
 
