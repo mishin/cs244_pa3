@@ -91,6 +91,7 @@ class StarTopo(Topo):
             # Let h0 be the front-end server
 
 def getBW():
+    return 50
     sample = random.uniform(0, 1)
     if sample < 0.125:
         return 50  # kbps
@@ -217,11 +218,12 @@ def main():
 
     for host_id in xrange(1, args.n):
         client = "h%d" % host_id
-	client_bw = str(topo.bwMap[client])
-	f.write("Bandwidth: " + client_bw)
+        client_bw = str(topo.bwMap[client])
+        f.write("Bandwidth: " + client_bw)
         for cwnd in cwnd_list:
             # Set initial congestion window of server
             set_init_cwnd(net, cwnd)
+            CLI(net)
             # Send request and measure response time
             resp_time = http_request(net, client, f)
 
