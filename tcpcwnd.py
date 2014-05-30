@@ -81,11 +81,12 @@ class StarTopo(Topo):
                 delay_inst = '%fms' % (70.0/4) # Based on median RTT 70ms
             else:
                 bw_inst = getBW()/1000.0    # kbps -> Mbps
-		if bw_inst == 50.0/1000.0:
-			rtt = 200
-		else:
-			rtt = 90
-                delay_inst = '%fms' % (rtt/4)
+
+            if bw_inst == 50.0/1000.0:
+                rtt = 200
+            else:
+                rtt = 90
+            delay_inst = '%fms' % (getRTT()/4.)
                         
             linkopts = dict(bw=bw_inst, delay=delay_inst,
                     max_queue_size=10000, htb=True)
@@ -95,7 +96,7 @@ class StarTopo(Topo):
             # Let h0 be the front-end server
 
 def getBW():
-   # return 50
+    return 5000
     sample = random.uniform(0, 1)
     if sample < 0.125:
         return 50  # kbps
@@ -115,7 +116,7 @@ def getBW():
         return 5500
 
 def getRTT():
-    return 200
+    return 70
     sample = random.uniform(0, 1)
     if sample < 0.25:
         return 31/2.0
@@ -156,8 +157,9 @@ def set_init_cwnd(net, hostName, num_seg):
 
     result = h.cmd('ip route show')
     result = result.rstrip('\n')
-    result = h.cmd('ip route change %s initcwnd %d' % (result.rstrip('\n'), num_seg))
-    
+    result = h.cmd('ip route change %s initcwnd %d' % (result.rstrip('\n'), num_seg))    
+    h.cmd('ip route flush cache')
+
     # Verify
     result = h.cmd('ip route show')
     result = result.rstrip('\n')
@@ -171,6 +173,7 @@ def set_init_rwnd(net, hostName, num_seg):
     result = h.cmd('ip route show')
     result = result.rstrip('\n')
     result = h.cmd('ip route change %s initrwnd %d' % (result.rstrip('\n'), num_seg))
+    result = h.cmd('ip route flush cache')
 
     # Verify
     result = h.cmd('ip route show')
@@ -237,6 +240,7 @@ def main():
             # Set initial congestion window of server
             set_init_cwnd(net, "h0", cwnd)
             set_init_cwnd(net, client, cwnd)
+            CLI(net)
             # Send request and measure response time
             resp_time = http_request(net, client, f)
 
