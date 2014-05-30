@@ -111,6 +111,7 @@ def getBW():
         return 5500
 
 def getRTT():
+    return 70
     sample = random.uniform(0, 1)
     if sample < 0.25:
         return 31/2.0
@@ -128,40 +129,49 @@ def start_receiver(net, hostName):
     h = net.getNodeByName(hostName)
     client = h.popen('iperf -s -w %d' % 50000, shell=True)    # 50kB TCP window
 '''
-def set_init_cwnd(net, num_seg):
+def set_all_winds(net, num_seg, wind_type):
+    for host_id in xrange(0, args.n):
+        hostName = 'h%d' % host_id
+        if wind_type == "cwnd":
+            set_init_cwnd(net, hostName, num_seg)
+        elif wind_type == "rwnd":
+            set_init_rwnd(net, hostName, num_seg)
+        else:
+            print "[set_all_winds] Invalid window type!"
+            return
+
+def set_init_cwnd(net, hostName, num_seg):
     ''' --How to change initial cwnd--
         ip route show
         sudo ip route change [Paste the current settings for default] initcwnd 10
     '''
 
-    print "Changing initcwnd of h0(server) to %d..." % num_seg  
+    print "Changing initcwnd of %s to %d..." % (hostName, num_seg)  
     
-    h0 = net.getNodeByName('h0')
+    h = net.getNodeByName(hostName)
 
-    result = h0.cmd('ip route show')
+    result = h.cmd('ip route show')
     result = result.rstrip('\n')
-    result = h0.cmd('ip route change %s initcwnd %d' % (result.rstrip('\n'), num_seg))
+    result = h.cmd('ip route change %s initcwnd %d' % (result.rstrip('\n'), num_seg))
     
     # Verify
-    result = h0.cmd('ip route show')
+    result = h.cmd('ip route show')
     result = result.rstrip('\n')
     print result
 
-def set_init_rwnd(net, num_seg):
-    for i in range(1, args.n):
-        hostName = 'h%d' % i
-        print "Changing initrwnd of %s to %d..." % (hostName, num_seg)
+def set_init_rwnd(net, hostName, num_seg):
+    print "Changing initrwnd of %s to %d..." % (hostName, num_seg)
 
-        h = net.getNodeByName(hostName)
+    h = net.getNodeByName(hostName)
 
-        result = h.cmd('ip route show')
-        result = result.rstrip('\n')
-        result = h.cmd('ip route change %s initrwnd %d' % (result.rstrip('\n'), num_seg))
+    result = h.cmd('ip route show')
+    result = result.rstrip('\n')
+    result = h.cmd('ip route change %s initrwnd %d' % (result.rstrip('\n'), num_seg))
 
-        # Verify
-        result = h.cmd('ip route show')
-        result = result.rstrip('\n')
-        print result
+    # Verify
+    result = h.cmd('ip route show')
+    result = result.rstrip('\n')
+    print result
 '''
 def run_iperfs(net, destHost):
     h1 = net.getNodeByName('h1')
@@ -205,14 +215,14 @@ def main():
     dumpNodeConnections(net.hosts)
     #net.pingAll()
 
-    # Set initial receive window of clients
-    set_init_rwnd(net, 20)    
+    # Set initial receive window of all hosts
+    set_all_winds(net, 20, "rwnd")
 
     # Run simple http server on h1
     start_http_server(net)
 
     # Experiment
-    cwnd_list = [3, 10]
+    cwnd_list = [10, 3]
 
     # output file
     f = open(args.out, 'a')
@@ -223,7 +233,7 @@ def main():
         f.write("Bandwidth: " + client_bw)
         for cwnd in cwnd_list:
             # Set initial congestion window of server
-            set_init_cwnd(net, cwnd)
+            set_all_winds(net, cwnd, "cwnd")
             CLI(net)
             # Send request and measure response time
             resp_time = http_request(net, client, f)
