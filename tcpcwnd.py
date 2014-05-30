@@ -127,6 +127,7 @@ def start_receiver(net, hostName):
     h = net.getNodeByName(hostName)
     client = h.popen('iperf -s -w %d' % 50000, shell=True)    # 50kB TCP window
 '''
+
 def set_init_cwnd(net, num_seg):
     ''' --How to change initial cwnd--
         ip route show
@@ -161,6 +162,7 @@ def set_init_rwnd(net, num_seg):
         result = h.cmd('ip route show')
         result = result.rstrip('\n')
         print result
+
 '''
 def run_iperfs(net, destHost):
     h1 = net.getNodeByName('h1')
@@ -174,15 +176,13 @@ def run_iperfs(net, destHost):
     # Also make it send sequentially
 '''
 
-""" Start http server at node h1
-"""
+# Start http server at node h1
 def start_http_server(net):
     print "Starting HTTP server at h0..."
     server = net.getNodeByName("h0")
     server.popen("python httpServer.py")    
 
-""" http request from node <clientName>
-"""
+# http request from node <clientName>
 def http_request(net, clientName, outputFile):
     print "Requesting HTTP server from %s..." % clientName
     client = net.getNodeByName(clientName)
@@ -190,8 +190,7 @@ def http_request(net, clientName, outputFile):
     r = client.cmd("time wget -q -O /dev/null %s:8000" % server.IP())
     outputFile.write(r)
 
-""" Main function
-"""
+# Main function
 def main():
     "Create network and run Buffer Sizing experiment"
 
