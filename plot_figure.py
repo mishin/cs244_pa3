@@ -9,6 +9,7 @@ else:
     m.use("Agg")
 import matplotlib.pyplot as plt
 from argparse import ArgumentParser
+from matplotlib.ticker import FormatStrFormatter
 
 # Parse arguments
 parser = ArgumentParser(description="Takes nicely formatted data and makes a bar chart")
@@ -121,15 +122,21 @@ try:
 
         fig, ax = plt.subplots()
 	ax2 = ax.twinx()
-        rects1 = ax.bar(ind, avg_improvement, width, color='m', log=1)
-        rects2 = ax2.bar(ind+width, perc_improvement, width, color='b')
+        rects1 = ax.bar(ind, avg_improvement, width, color='#FF6262', edgecolor='r', log=1)
+        rects2 = ax2.bar(ind+width, perc_improvement, width, color='b', edgecolor='b')
 
         # add labels
         ax.set_ylabel('Improvement (ms)')
-	ax2.set_ylabel('some label')
+	ax2.set_ylabel('Improvement (%)')
         ax.set_xlabel('Bandwidth (Kbps)')
         ax.set_xticks(ind+width)
         ax.set_xticklabels( ('56', '256', '512', '1000', '2000', '3000', '5000', '5000+') )
+	ax.set_yscale('log')
+	ax.yaxis.set_major_formatter(FormatStrFormatter('%1.0f'))
+	ax.set_yticks([1,10,100,1000,10000])
+	ax.grid(True)
+	ax.set_axisbelow(True)
+	ax2.set_yticks(numpy.linspace(0, 50, 6))
         ax.legend( (rects1[0], rects2[0]), ('Absolute Improvement', 'Percentage Improvement') )
         plt.savefig(args.out)
 except EnvironmentError:

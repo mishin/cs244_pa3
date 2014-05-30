@@ -140,7 +140,7 @@ def set_all_winds(net, num_seg, wind_type):
             print "[set_all_winds] Invalid window type!"
             return
 
-def set_init_cwnd(net, hostName, num_seg):
+def set_init_cwnd(net, num_seg):
     ''' --How to change initial cwnd--
         ip route show
         sudo ip route change [Paste the current settings for default] initcwnd 10
@@ -172,6 +172,7 @@ def set_init_rwnd(net, hostName, num_seg):
     result = h.cmd('ip route show')
     result = result.rstrip('\n')
     print result
+
 '''
 def run_iperfs(net, destHost):
     h1 = net.getNodeByName('h1')
@@ -185,15 +186,13 @@ def run_iperfs(net, destHost):
     # Also make it send sequentially
 '''
 
-""" Start http server at node h1
-"""
+# Start http server at node h1
 def start_http_server(net):
     print "Starting HTTP server at h0..."
     server = net.getNodeByName("h0")
     server.popen("python httpServer.py")    
 
-""" http request from node <clientName>
-"""
+# http request from node <clientName>
 def http_request(net, clientName, outputFile):
     print "Requesting HTTP server from %s..." % clientName
     client = net.getNodeByName(clientName)
@@ -201,8 +200,7 @@ def http_request(net, clientName, outputFile):
     r = client.cmd("time wget -q -O /dev/null %s:8000" % server.IP())
     outputFile.write(r)
 
-""" Main function
-"""
+# Main function
 def main():
     "Create network and run Buffer Sizing experiment"
 
