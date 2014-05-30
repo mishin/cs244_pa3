@@ -34,7 +34,7 @@ class KodeFunHTTPRequestHandler(BaseHTTPRequestHandler):
 """
 #TODO: need finer distribution
 def get_response_size():
-    return 90000
+    return 9000
     sample = random.uniform(0, 1)
     
     if sample < 0.25:

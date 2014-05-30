@@ -81,7 +81,11 @@ class StarTopo(Topo):
                 delay_inst = '%fms' % (70.0/4) # Based on median RTT 70ms
             else:
                 bw_inst = getBW()/1000.0    # kbps -> Mbps
-                delay_inst = '%fms' % (getRTT()/4)
+		if bw_inst == 50.0/1000.0:
+			rtt = 200
+		else:
+			rtt = 90
+                delay_inst = '%fms' % (rtt/4)
                         
             linkopts = dict(bw=bw_inst, delay=delay_inst,
                     max_queue_size=10000, htb=True)
@@ -111,7 +115,7 @@ def getBW():
         return 5500
 
 def getRTT():
-    return 70
+    return 200
     sample = random.uniform(0, 1)
     if sample < 0.25:
         return 31/2.0
@@ -220,7 +224,7 @@ def main():
     start_http_server(net)
 
     # Experiment
-    cwnd_list = [10, 3]
+    cwnd_list = [3, 10]
 
     # output file
     f = open(args.out, 'a')
