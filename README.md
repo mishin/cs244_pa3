@@ -9,4 +9,4 @@ Programming Assignment 3 for CS 244
 - Run the experiment
  - sudo ./run.sh
 - The results of the experiment are plotted in a graph saved as “results.png”
- - To view the results, run ‘python -m SimpleHTTPServer’ and point your web browser at <hostname>:8000/results.png
+ - To view the results, run ‘python -m SimpleHTTPServer’ and point your web browser at \<hostname\>:8000/results.png
