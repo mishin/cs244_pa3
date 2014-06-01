@@ -52,13 +52,19 @@ parser.add_argument('-o', '--out',
                     required=True,
                     default=None)
 
+parser.add_argument('-r', '--response',
+                    help="Responsive of http server",
+                    dest="resp_size",
+                    required=True,
+                    default = 9000)
+
 args = parser.parse_args()
 
 # Topology to be instantiated in Mininet
 class StarTopo(Topo):
     "Star topology for Buffer Sizing experiment"
 
-    def __init__(self, n=3, cpu=None, maxq=10000):
+    def __init__(self, n=3, cpu=.5, maxq=10000):
         # Add default members to class.
         super(StarTopo, self ).__init__()
         self.n = n
@@ -81,11 +87,12 @@ class StarTopo(Topo):
                 delay_inst = '%fms' % (70.0/4) # Based on median RTT 70ms
             else:
                 bw_inst = getBW()/1000.0    # kbps -> Mbps
-
+            '''
             if bw_inst == 50.0/1000.0:
                 rtt = 200
             else:
                 rtt = 90
+            '''
             delay_inst = '%fms' % (getRTT()/4.)
                         
             linkopts = dict(bw=bw_inst, delay=delay_inst,
@@ -96,7 +103,6 @@ class StarTopo(Topo):
             # Let h0 be the front-end server
 
 def getBW():
-    return 5000
     sample = random.uniform(0, 1)
     if sample < 0.125:
         return 50  # kbps
@@ -179,25 +185,13 @@ def set_init_rwnd(net, hostName, num_seg):
     result = h.cmd('ip route show')
     result = result.rstrip('\n')
     print result
-
-'''
-def run_iperfs(net, destHost):
-    h1 = net.getNodeByName('h1')
-    #for i in xrange(args.net-1):
-    #    h = net.getNodeByName('h%d' % i+2)
-
-    h = net.getNodeByName(destHost)    
-    size = get_response_size()
-    client = h.popen('iperf -c %s -n %s' % (h.IP(), size))
-    # Need to give random size of flow based on distribution    
     # Also make it send sequentially
-'''
 
 # Start http server at node h1
 def start_http_server(net):
     print "Starting HTTP server at h0..."
     server = net.getNodeByName("h0")
-    server.popen("python httpServer.py")    
+    server.popen("python httpServer.py %s" % args.resp_size)    
 
 # http request from node <clientName>
 def http_request(net, clientName, outputFile):
@@ -206,6 +200,7 @@ def http_request(net, clientName, outputFile):
     server = net.getNodeByName("h0")
     r = client.cmd("time wget -q -O /dev/null %s:8000" % server.IP())
     outputFile.write(r)
+    sleep(2)
 
 # Main function
 def main():
@@ -230,7 +225,7 @@ def main():
     cwnd_list = [3, 10]
 
     # output file
-    f = open(args.out, 'a')
+    f = open(args.out, 'w')
 
     for host_id in xrange(1, args.n):
         client = "h%d" % host_id
@@ -240,7 +235,6 @@ def main():
             # Set initial congestion window of server
             set_init_cwnd(net, "h0", cwnd)
             set_init_cwnd(net, client, cwnd)
-            CLI(net)
             # Send request and measure response time
             resp_time = http_request(net, client, f)
 

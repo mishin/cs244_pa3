@@ -16,7 +16,7 @@ parser.add_argument('-o', '--out',
 args = parser.parse_args()
 
 try:
-    f = open(args.out, 'a')
+    f = open(args.out, 'w')
     with open(args.infile) as outputFile:
 	# simple flag to identify 1st vs 2nd entry for a host
 	isSecond = 0
