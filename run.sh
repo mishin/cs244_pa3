@@ -11,4 +11,4 @@ do
     python calculate_improvement.py -f output_formatted.txt -o improvement.txt
 done
 
-python average_and_plot.py -f improvement.txt -o fig6.png
+python average_and_plot.py -f improvement.txt -o results.png
