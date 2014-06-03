@@ -9,7 +9,7 @@ do
     echo "Cleaning up Mininet topology..."
     sudo mn -c 2> /dev/null
     echo "Experiment $i of 10"
-    python tcpcwnd.py -n 3 -r $resp_size -o output_raw.txt
+    python tcpcwnd.py -n 31 -r $resp_size -o output_raw.txt
     python formatOutput.py -f output_raw.txt -o output_formatted.txt
     python calculate_improvement.py -f output_formatted.txt -o improvement.txt
     i=$((i+1))
