@@ -45,8 +45,8 @@ try:
     perc_improvement = []
 
     for i in range(0,8):
-	abs_improvement.append(exp[i]-base[i])
-	perc_improvement.append(abs_improvement[i]/base[i])	
+	abs_improvement.append(base[i]-exp[i])
+	perc_improvement.append(abs_improvement[i]*100.0/base[i])	
 
     N = 8
     ind = numpy.arange(N)  # the x locations for the groups
