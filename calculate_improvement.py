@@ -41,31 +41,32 @@ buckets["5000+"] = []
 #       latency_large - response latency for larger initcwnd
 
 def addToBucket(bw, latency_small, latency_large):
-        improvement_abs = latency_small - latency_large
-        improvement_perc = (improvement_abs / latency_small) * 100.0
+        # improvement_abs = latency_small - latency_large
+        # improvement_perc = (improvement_abs / latency_small) * 100.0
 
         if bw <= 56:
-                buckets["56"].append((improvement_abs, improvement_perc))
+                buckets["56"].append((latency_small, latency_large))
         elif bw <= 256:
-                buckets["256"].append((improvement_abs, improvement_perc))
+                buckets["256"].append((latency_small, latency_large))
         elif bw <= 512:
-                buckets["512"].append((improvement_abs, improvement_perc))
+                buckets["512"].append((latency_small, latency_large))
         elif bw <= 1000:
-                buckets["1000"].append((improvement_abs, improvement_perc))
+                buckets["1000"].append((latency_small, latency_large))
         elif bw <= 2000:
-                buckets["2000"].append((improvement_abs, improvement_perc))
+                buckets["2000"].append((latency_small, latency_large))
         elif bw <= 3000:
-                buckets["3000"].append((improvement_abs, improvement_perc))
+                buckets["3000"].append((latency_small, latency_large))
         elif bw <= 5000:
-                buckets["5000"].append((improvement_abs, improvement_perc))
+                buckets["5000"].append((latency_small, latency_large))
         else:
-                buckets["5000+"].append((improvement_abs, improvement_perc))
+                buckets["5000+"].append((latency_small, latency_large))
 
 try:
     with open(args.infile) as csvfile:
         reader = csv.reader(csvfile, delimiter='\t')
         for row in reader:
             addToBucket(float(row[0]), float(row[1]), float(row[2]))
+
     improvement = []
     if buckets["56"]:
         improvement.append(numpy.mean(buckets["56"], 0))
@@ -100,16 +101,16 @@ try:
     else:
         improvement.append((0,0))
 
-    avg_improvement = []
-    perc_improvement = []
+    improvement_small = []
+    improvement_large = []
 
     for a in improvement:
-        avg_improvement.append(a[0])
-        perc_improvement.append(a[1])
+        improvement_small.append(a[0])
+        improvement_large.append(a[1])
 
     outfile = open(args.out, 'a')
     for ind in xrange(len(improvement)):
-        outfile.write("%s\t%s\n" % (avg_improvement[ind], perc_improvement[ind]))
+        outfile.write("%s\t%s\n" % (improvement_small[ind], improvement_large[ind]))
     outfile.write("--\n")
     outfile.close()
 
