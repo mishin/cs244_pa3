@@ -130,14 +130,7 @@ def getRTT():
         return (70+120)/2.0
     else:
         return (120+1000)/2.0
-'''
-def start_receiver(net, hostName):
-    print "Starting iperf server at %s ..." % hostName
 
-    #for i in xrange(args.n-1):   # Can we get number of nodes from <net>?
-    h = net.getNodeByName(hostName)
-    client = h.popen('iperf -s -w %d' % 50000, shell=True)    # 50kB TCP window
-'''
 def set_all_winds(net, num_seg, wind_type):
     for host_id in xrange(0, args.n):
         hostName = 'h%d' % host_id
@@ -155,7 +148,7 @@ def set_init_cwnd(net, hostName, num_seg):
         sudo ip route change [Paste the current settings for default] initcwnd 10
     '''
 
-    print "Changing initcwnd of %s to %d..." % (hostName, num_seg)  
+    # print "Changing initcwnd of %s to %d..." % (hostName, num_seg)  
     
     h = net.getNodeByName(hostName)
 
@@ -167,10 +160,10 @@ def set_init_cwnd(net, hostName, num_seg):
     # Verify
     result = h.cmd('ip route show')
     result = result.rstrip('\n')
-    print result
+    # print result
 
 def set_init_rwnd(net, hostName, num_seg):
-    print "Changing initrwnd of %s to %d..." % (hostName, num_seg)
+    # print "Changing initrwnd of %s to %d..." % (hostName, num_seg)
 
     h = net.getNodeByName(hostName)
 
@@ -182,18 +175,18 @@ def set_init_rwnd(net, hostName, num_seg):
     # Verify
     result = h.cmd('ip route show')
     result = result.rstrip('\n')
-    print result
+    # print result
     # Also make it send sequentially
 
 # Start http server at node h1
 def start_http_server(net):
-    print "Starting HTTP server at h0..."
+    # print "Starting HTTP server at h0..."
     server = net.getNodeByName("h0")
     server.popen("python httpServer.py %s" % args.resp_size)    
 
 # http request from node <clientName>
 def http_request(net, clientName, outputFile):
-    print "Requesting HTTP server from %s..." % clientName
+    print "Requesting HTTP server from node %s of %d" % (clientName[1:], args.n - 1)
     client = net.getNodeByName(clientName)
     server = net.getNodeByName("h0")
     r = client.cmd("time wget -q -O /dev/null %s:8000" % server.IP())
@@ -210,8 +203,8 @@ def main():
     
     net = Mininet(topo=topo, host=CPULimitedHost, link=TCLink)
     net.start()
-    dumpNodeConnections(net.hosts)
-    #net.pingAll()
+    # dumpNodeConnections(net.hosts)
+    # net.pingAll()
 
     # Set initial receive window of all hosts
     set_all_winds(net, 20, "rwnd")
