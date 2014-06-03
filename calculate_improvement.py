@@ -41,25 +41,22 @@ buckets["5000+"] = []
 #       latency_large - response latency for larger initcwnd
 
 def addToBucket(bw, latency_small, latency_large):
-        improvement_abs = latency_small - latency_large
-        improvement_perc = (improvement_abs / latency_small) * 100.0
-
         if bw <= 56:
-                buckets["56"].append((improvement_abs, improvement_perc))
+                buckets["56"].append((latency_small, latency_large))
         elif bw <= 256:
-                buckets["256"].append((improvement_abs, improvement_perc))
+                buckets["256"].append((latency_small, latency_large))
         elif bw <= 512:
-                buckets["512"].append((improvement_abs, improvement_perc))
+                buckets["512"].append((latency_small, latency_large))
         elif bw <= 1000:
-                buckets["1000"].append((improvement_abs, improvement_perc))
+                buckets["1000"].append((latency_small, latency_large))
         elif bw <= 2000:
-                buckets["2000"].append((improvement_abs, improvement_perc))
+                buckets["2000"].append((latency_small, latency_large))
         elif bw <= 3000:
-                buckets["3000"].append((improvement_abs, improvement_perc))
+                buckets["3000"].append((latency_small, latency_large))
         elif bw <= 5000:
-                buckets["5000"].append((improvement_abs, improvement_perc))
+                buckets["5000"].append((latency_small, latency_large))
         else:
-                buckets["5000+"].append((improvement_abs, improvement_perc))
+                buckets["5000+"].append((latency_small, latency_large))
 
 try:
     with open(args.infile) as csvfile:
@@ -105,7 +102,7 @@ try:
 
     for a in improvement:
         avg_improvement.append(a[0])
-        perc_improvement.append(a[1])
+        perc_improvement.append((a[1]-a[0])/a[0])
 
     outfile = open(args.out, 'a')
     for ind in xrange(len(improvement)):

@@ -22,8 +22,6 @@ import random
 
 import sys
 import os
-from util.monitor import monitor_qlen
-from util.helper import stdev
 
 # Parse arguments
 parser = ArgumentParser(description="Cwnd adjusting")
